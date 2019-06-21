@@ -2,16 +2,19 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <SiteHeader />
+    <SearchSection />
   </div>
 </template>
 
 <script>
 import SiteHeader from "./components/SiteHeader.vue";
+import SearchSection from "./components/SearchSection.vue";
 
 export default {
   name: "app",
   components: {
-    SiteHeader
+    SiteHeader,
+    SearchSection
   }
 };
 </script>
