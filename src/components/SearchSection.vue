@@ -6,13 +6,14 @@
         <input type="text" v-model="searchInputValue" />
       </form>
       <ul>
-        <li v-for="result in searchState.results" :key="result.card_id.raw">
+        <li v-for="result in searchState.results" :key="result.id.raw">
           <img
-            :src="result.img.raw"
-            alt=""
-            v-if="result.img && result.img.raw"
+            :src="
+              `https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${result.id.raw}.png`
+            "
+            :alt="result.name.raw"
+            width="256"
           />
-          {{ JSON.stringify(result) }}
         </li>
       </ul>
     </div>
