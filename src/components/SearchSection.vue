@@ -4,7 +4,24 @@
       <form action="" @submit.prevent="handleFormSubmit">
         <input v-model="searchInputValue" type="text" />
       </form>
-      <ul class="search-section__search-results">
+      <div v-if="searchState.facets && searchState.facets.race">
+        Race:
+        <div
+          v-for="facet in searchState.facets.race[0].data"
+          :key="facet.value"
+        >
+          <label>
+            <input
+              v-model="races"
+              type="checkbox"
+              :value="facet.value"
+              @change="handleRaceChange"
+            />{{ facet.value }}
+          </label>
+        </div>
+      </div>
+
+      <ul v-if="searchState.results" class="search-section__search-results">
         <li
           v-for="result in searchState.results"
           :key="result.id.raw"
@@ -28,7 +45,18 @@ const connector = new AppSearchAPIConnector({
   hostIdentifier: "host-98wz59"
 });
 
-const config = { apiConnector: connector };
+const config = {
+  debug: true,
+  apiConnector: connector,
+  disjunctiveFacets: ["race"],
+  searchQuery: {
+    facets: {
+      race: {
+        type: "value"
+      }
+    }
+  }
+};
 const driver = new SearchDriver(config);
 
 export default {
@@ -38,20 +66,26 @@ export default {
   data() {
     return {
       searchInputValue: "",
-      searchState: {
-        results: []
-      }
+      searchState: {},
+      races: []
     };
   },
   mounted() {
     driver.subscribeToStateChanges(state => {
-      console.log(`Received ${state.totalResults} results for your search!`);
       this.searchState = state;
     });
   },
   methods: {
     handleFormSubmit() {
       driver.getActions().setSearchTerm(this.searchInputValue);
+    },
+    handleRaceChange(event) {
+      const { value, checked } = event.target;
+      if (checked) {
+        driver.getActions().addFilter("race", value, "any");
+      } else {
+        driver.getActions().removeFilter("race", value, "any");
+      }
     }
   }
 };
