@@ -11,7 +11,7 @@ import SiteHeader from "./components/SiteHeader.vue";
 import SearchSection from "./components/SearchSection.vue";
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     SiteHeader,
     SearchSection

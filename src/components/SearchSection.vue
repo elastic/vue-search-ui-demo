@@ -3,14 +3,12 @@
     <div>SearchSection</div>
     <div>
       <form action="" @submit.prevent="handleFormSubmit">
-        <input type="text" v-model="searchInputValue" />
+        <input v-model="searchInputValue" type="text" />
       </form>
       <ul>
         <li v-for="result in searchState.results" :key="result.id.raw">
           <img
-            :src="
-              `https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${result.id.raw}.png`
-            "
+            :src="imageSrc(result.id.raw)"
             :alt="result.name.raw"
             width="256"
           />
@@ -30,10 +28,7 @@ const connector = new AppSearchAPIConnector({
   hostIdentifier: "host-98wz59"
 });
 
-const config = {
-  apiConnector: connector
-};
-
+const config = { apiConnector: connector };
 const driver = new SearchDriver(config);
 
 export default {
@@ -45,10 +40,9 @@ export default {
       }
     };
   },
-  computed: {},
-  methods: {
-    handleFormSubmit() {
-      driver.getActions().setSearchTerm(this.searchInputValue);
+  computed: {
+    imageSrc(id) {
+      return `https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${id}.png`;
     }
   },
   mounted() {
@@ -56,6 +50,11 @@ export default {
       console.log(`Received ${state.totalResults} results for your search!`);
       this.searchState = state;
     });
+  },
+  methods: {
+    handleFormSubmit() {
+      driver.getActions().setSearchTerm(this.searchInputValue);
+    }
   }
 };
 </script>
