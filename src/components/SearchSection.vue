@@ -7,11 +7,7 @@
       </form>
       <ul>
         <li v-for="result in searchState.results" :key="result.id.raw">
-          <img
-            :src="imageSrc(result.id.raw)"
-            :alt="result.name.raw"
-            width="256"
-          />
+          <SearchResult :result="result" />
         </li>
       </ul>
     </div>
@@ -21,6 +17,7 @@
 <script>
 import { SearchDriver } from "@elastic/search-ui";
 import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
+import SearchResult from "./SearchResult";
 
 const connector = new AppSearchAPIConnector({
   searchKey: "search-cmx2y22ucp9ry64mneez4ddj",
@@ -32,6 +29,9 @@ const config = { apiConnector: connector };
 const driver = new SearchDriver(config);
 
 export default {
+  components: {
+    SearchResult
+  },
   data() {
     return {
       searchInputValue: "",
@@ -39,11 +39,6 @@ export default {
         results: []
       }
     };
-  },
-  computed: {
-    imageSrc(id) {
-      return `https://art.hearthstonejson.com/v1/render/latest/enUS/512x/${id}.png`;
-    }
   },
   mounted() {
     driver.subscribeToStateChanges(state => {
