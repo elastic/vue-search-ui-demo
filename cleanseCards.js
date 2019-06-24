@@ -11,17 +11,9 @@ fs.readFile(
     }
 
     const parsedData = JSON.parse(data);
-    console.log(parsedData.length);
+    console.log(`${parsedData.length} cards found`);
 
-    const newData = parsedData
-      .filter(
-        card =>
-          card.type === "MINION" ||
-          card.type === "SPELL" ||
-          card.type === "WEAPON"
-      )
-      .map(snakecaseKeys);
-    console.log(newData.length);
+    const newData = parsedData.map(snakecaseKeys);
 
     fs.writeFile(
       path.join(__dirname, "./src/data/cards-cleansed.json"),
