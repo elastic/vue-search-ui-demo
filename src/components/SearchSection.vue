@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div>SearchSection</div>
     <div>
       <form action="" @submit.prevent="handleFormSubmit">
         <input v-model="searchInputValue" type="text" />
       </form>
-      <ul>
-        <li v-for="result in searchState.results" :key="result.id.raw">
+      <ul class="search-section__search-results">
+        <li
+          v-for="result in searchState.results"
+          :key="result.id.raw"
+          class="search-section__search-result"
+        >
           <SearchResult :result="result" />
         </li>
       </ul>
@@ -53,3 +56,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.search-section__search-results {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.search-section__search-result {
+  list-style: none;
+  width: 50%;
+}
+</style>

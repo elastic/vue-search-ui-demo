@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="header">
     <h1>Vue search-ui demo (with Hearthstone cards)</h1>
   </div>
 </template>
@@ -10,4 +10,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.header {
+  text-align: center;
+}
+</style>
