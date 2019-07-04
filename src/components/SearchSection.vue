@@ -21,6 +21,23 @@
         </div>
       </div>
 
+      <div v-if="searchState.facets && searchState.facets.rarity">
+        Rarity:
+        <div
+          v-for="facet in searchState.facets.rarity[0].data"
+          :key="facet.value"
+        >
+          <label>
+            <input
+              v-model="rarities"
+              type="checkbox"
+              :value="facet.value"
+              @change="handleRarityChange"
+            />{{ facet.value }}
+          </label>
+        </div>
+      </div>
+
       <ul v-if="searchState.results" class="search-section__search-results">
         <li
           v-for="result in searchState.results"
@@ -53,6 +70,9 @@ const config = {
     facets: {
       race: {
         type: "value"
+      },
+      rarity: {
+        type: "value"
       }
     }
   }
@@ -67,7 +87,8 @@ export default {
     return {
       searchInputValue: "",
       searchState: {},
-      races: []
+      races: [],
+      rarities: []
     };
   },
   mounted() {
@@ -82,9 +103,17 @@ export default {
     handleRaceChange(event) {
       const { value, checked } = event.target;
       if (checked) {
-        driver.getActions().addFilter("race", value, "any");
+        driver.addFilter("race", value, "any");
       } else {
-        driver.getActions().removeFilter("race", value, "any");
+        driver.removeFilter("race", value, "any");
+      }
+    },
+    handleRarityChange(event) {
+      const { value, checked } = event.target;
+      if (checked) {
+        driver.addFilter("rarity", value, "any");
+      } else {
+        driver.removeFilter("rarity", value, "any");
       }
     }
   }
