@@ -1,15 +1,27 @@
 <template>
-  <div>
-    {{ facet.field }}
-    <div v-for="facetItem in facet.data" :key="facetItem.value">
-      <label>
-        <input
-          type="checkbox"
-          :value="facetItem.value"
-          :checked="isChecked(facetItem.value)"
-          @change="$emit('change', $event)"
-        />
-        {{ facetItem.value }}
+  <div class="sui-multi-checkbox-facet sui-facet">
+    <div class="sui-multi-checkbox-facet__label">
+      {{ facet.field }}
+    </div>
+    <div class="sui-multi-checkbox-facet__options-list">
+      <label
+        v-for="facetItem in facet.data"
+        :key="facetItem.value"
+        class="sui-multi-checkbox-facet__option-label"
+      >
+        <div class="sui-multi-checkbox-facet__option-input-wrapper">
+          <input
+            class="sui-multi-checkbox-facet__checkbox"
+            type="checkbox"
+            :value="facetItem.value"
+            :checked="isChecked(facetItem.value)"
+            @change="$emit('change', $event)"
+          />
+          <span class="sui-multi-checkbox-facet__input-text">{{
+            facetItem.value
+          }}</span>
+        </div>
+        <span class="sui-multi-checkbox-facet__option-count">TODO</span>
       </label>
     </div>
   </div>
