@@ -21,7 +21,9 @@
             facetItem.value
           }}</span>
         </div>
-        <span class="sui-multi-checkbox-facet__option-count">TODO</span>
+        <span class="sui-multi-checkbox-facet__option-count">{{
+          facetItem.count
+        }}</span>
       </label>
     </div>
   </div>
