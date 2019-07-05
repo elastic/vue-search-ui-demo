@@ -19,6 +19,11 @@
           />
         </div>
         <div class="sui-layout-main">
+          <div class="sui-layout-main-header">
+            <div class="sui-layout-main-header__inner">
+              <SearchPagingInfo :search-state="searchState" />
+            </div>
+          </div>
           <SearchResults
             v-if="searchState.results"
             :results="searchState.results"
@@ -35,6 +40,7 @@ import config from "../searchConfig";
 import SearchResults from "./SearchResults";
 import SearchFacet from "./SearchFacet";
 import SearchHeader from "./SearchHeader";
+import SearchPagingInfo from "./SearchPagingInfo";
 
 const driver = new SearchDriver(config);
 
@@ -42,7 +48,8 @@ export default {
   components: {
     SearchResults,
     SearchFacet,
-    SearchHeader
+    SearchHeader,
+    SearchPagingInfo
   },
   data() {
     return {
