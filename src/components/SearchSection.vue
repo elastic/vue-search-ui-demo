@@ -4,91 +4,48 @@
       <form action="" @submit.prevent="handleFormSubmit">
         <input v-model="searchInputValue" type="text" />
       </form>
-      <div v-if="searchState.facets && searchState.facets.race">
-        Race:
-        <div
-          v-for="facet in searchState.facets.race[0].data"
-          :key="facet.value"
-        >
-          <label>
-            <input
-              v-model="races"
-              type="checkbox"
-              :value="facet.value"
-              @change="handleRaceChange"
-            />{{ facet.value }}
-          </label>
-        </div>
-      </div>
 
-      <div v-if="searchState.facets && searchState.facets.rarity">
-        Rarity:
-        <div
-          v-for="facet in searchState.facets.rarity[0].data"
-          :key="facet.value"
-        >
-          <label>
-            <input
-              v-model="rarities"
-              type="checkbox"
-              :value="facet.value"
-              @change="handleRarityChange"
-            />{{ facet.value }}
-          </label>
-        </div>
-      </div>
+      <SearchFacet
+        v-if="searchState.facets && searchState.facets.race"
+        :checked="race"
+        :facet="searchState.facets.race[0]"
+        @change="handleFacetChange($event, 'race')"
+      />
 
-      <ul v-if="searchState.results" class="search-section__search-results">
-        <li
-          v-for="result in searchState.results"
-          :key="result.id.raw"
-          class="search-section__search-result"
-        >
-          <SearchResult :result="result" />
-        </li>
-      </ul>
+      <SearchFacet
+        v-if="searchState.facets && searchState.facets.rarity"
+        :checked="rarity"
+        :facet="searchState.facets.rarity[0]"
+        @change="handleFacetChange($event, 'rarity')"
+      />
+
+      <SearchResults
+        v-if="searchState.results"
+        :results="searchState.results"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { SearchDriver } from "@elastic/search-ui";
-import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
-import SearchResult from "./SearchResult";
+import config from "../searchConfig";
+import SearchResults from "./SearchResults";
+import SearchFacet from "./SearchFacet";
 
-const connector = new AppSearchAPIConnector({
-  searchKey: "search-cmx2y22ucp9ry64mneez4ddj",
-  engineName: "hearthstone-cards",
-  hostIdentifier: "host-98wz59"
-});
-
-const config = {
-  debug: true,
-  apiConnector: connector,
-  disjunctiveFacets: ["race"],
-  searchQuery: {
-    facets: {
-      race: {
-        type: "value"
-      },
-      rarity: {
-        type: "value"
-      }
-    }
-  }
-};
 const driver = new SearchDriver(config);
 
 export default {
   components: {
-    SearchResult
+    SearchResults,
+    SearchFacet
   },
   data() {
     return {
       searchInputValue: "",
       searchState: {},
-      races: [],
-      rarities: []
+      race: {},
+      rarity: {}
     };
   },
   mounted() {
@@ -100,35 +57,16 @@ export default {
     handleFormSubmit() {
       driver.getActions().setSearchTerm(this.searchInputValue);
     },
-    handleRaceChange(event) {
+    handleFacetChange(event, facet) {
       const { value, checked } = event.target;
       if (checked) {
-        driver.addFilter("race", value, "any");
+        this[facet][value] = true;
+        driver.addFilter(facet, value, "any");
       } else {
-        driver.removeFilter("race", value, "any");
-      }
-    },
-    handleRarityChange(event) {
-      const { value, checked } = event.target;
-      if (checked) {
-        driver.addFilter("rarity", value, "any");
-      } else {
-        driver.removeFilter("rarity", value, "any");
+        this[facet][value] = false;
+        driver.removeFilter(facet, value, "any");
       }
     }
   }
 };
 </script>
-
-<style>
-.search-section__search-results {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-.search-section__search-result {
-  list-style: none;
-  width: 50%;
-}
-</style>
