@@ -51,6 +51,14 @@
             <div class="sui-layout-main-header__inner">
               <SearchPagingInfo :search-state="searchState" />
             </div>
+            <div class="sui-results-per-page">
+              <div class="sui-results-per-page__label">Show</div>
+              <select v-model="resultsPerPage" name="resultsPerPage">
+                <option :value="20">20</option>
+                <option :value="40">40</option>
+                <option :value="60">60</option>
+              </select>
+            </div>
           </div>
           <SearchResults
             v-if="searchState.results"
@@ -88,8 +96,14 @@ export default {
       type: {},
       set: {},
       artist: {},
-      card_class: {}
+      card_class: {},
+      resultsPerPage: 20
     };
+  },
+  watch: {
+    resultsPerPage(newResultsPerPage) {
+      driver.setResultsPerPage(newResultsPerPage);
+    }
   },
   mounted() {
     driver.subscribeToStateChanges(state => {
