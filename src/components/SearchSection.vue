@@ -60,10 +60,18 @@
               </select>
             </div>
           </div>
-          <SearchResults
-            v-if="searchState.results"
-            :results="searchState.results"
-          />
+          <div class="sui-layout-main-body">
+            <SearchResults
+              v-if="searchState.results"
+              :results="searchState.results"
+            />
+          </div>
+          <div class="sui-layout-main-footer">
+            <SearchPagination
+              :total-pages="searchState.totalPages"
+              :click-handler="setCurrentPage"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -77,6 +85,7 @@ import SearchResults from "./SearchResults";
 import SearchFacet from "./SearchFacet";
 import SearchHeader from "./SearchHeader";
 import SearchPagingInfo from "./SearchPagingInfo";
+import SearchPagination from "./SearchPagination";
 
 const driver = new SearchDriver(config);
 
@@ -85,7 +94,8 @@ export default {
     SearchResults,
     SearchFacet,
     SearchHeader,
-    SearchPagingInfo
+    SearchPagingInfo,
+    SearchPagination
   },
   data() {
     return {
@@ -123,6 +133,9 @@ export default {
         this[facet][value] = false;
         driver.removeFilter(facet, value, "any");
       }
+    },
+    setCurrentPage(page) {
+      driver.setCurrent(page);
     }
   }
 };

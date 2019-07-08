@@ -1,5 +1,5 @@
 <template>
-  <ul class="search-section__search-results">
+  <ul class="sui-results-container search-section__search-results">
     <li
       v-for="result in results"
       :key="result.id.raw"
@@ -28,13 +28,10 @@ export default {
 
 <style>
 .search-section__search-results {
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-wrap: wrap;
 }
 .search-section__search-result {
-  list-style: none;
   width: 50%;
 }
 </style>
