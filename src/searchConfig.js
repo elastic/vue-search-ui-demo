@@ -17,6 +17,18 @@ const config = {
       },
       rarity: {
         type: "value"
+      },
+      type: {
+        type: "value"
+      },
+      set: {
+        type: "value"
+      },
+      artist: {
+        type: "value"
+      },
+      card_class: {
+        type: "value"
       }
     }
   }

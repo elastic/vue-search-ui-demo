@@ -5,6 +5,34 @@
       <div class="sui-layout-body__inner">
         <div class="sui-layout-sidebar">
           <SearchFacet
+            v-if="searchState.facets && searchState.facets.card_class"
+            :checked="card_class"
+            :facet="searchState.facets.card_class[0]"
+            @change="handleFacetChange($event, 'card_class')"
+          />
+
+          <SearchFacet
+            v-if="searchState.facets && searchState.facets.artist"
+            :checked="artist"
+            :facet="searchState.facets.artist[0]"
+            @change="handleFacetChange($event, 'artist')"
+          />
+
+          <SearchFacet
+            v-if="searchState.facets && searchState.facets.type"
+            :checked="type"
+            :facet="searchState.facets.type[0]"
+            @change="handleFacetChange($event, 'type')"
+          />
+
+          <SearchFacet
+            v-if="searchState.facets && searchState.facets.set"
+            :checked="set"
+            :facet="searchState.facets.set[0]"
+            @change="handleFacetChange($event, 'set')"
+          />
+
+          <SearchFacet
             v-if="searchState.facets && searchState.facets.race"
             :checked="race"
             :facet="searchState.facets.race[0]"
@@ -56,7 +84,11 @@ export default {
       searchInputValue: "",
       searchState: {},
       race: {},
-      rarity: {}
+      rarity: {},
+      type: {},
+      set: {},
+      artist: {},
+      card_class: {}
     };
   },
   mounted() {
