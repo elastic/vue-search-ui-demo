@@ -4,6 +4,8 @@
     <div class="sui-layout-body">
       <div class="sui-layout-body__inner">
         <div class="sui-layout-sidebar">
+          <SearchSort v-model="sortBy" />
+
           <SearchFacet
             v-if="searchState.facets && searchState.facets.card_class"
             :checked="card_class"
@@ -86,6 +88,7 @@ import SearchFacet from "./SearchFacet";
 import SearchHeader from "./SearchHeader";
 import SearchPagingInfo from "./SearchPagingInfo";
 import SearchPagination from "./SearchPagination";
+import SearchSort from "./SearchSort";
 
 const driver = new SearchDriver(config);
 
@@ -95,7 +98,8 @@ export default {
     SearchFacet,
     SearchHeader,
     SearchPagingInfo,
-    SearchPagination
+    SearchPagination,
+    SearchSort
   },
   data() {
     return {
@@ -107,12 +111,17 @@ export default {
       set: {},
       artist: {},
       card_class: {},
-      resultsPerPage: 20
+      resultsPerPage: 20,
+      sortBy: "relevance"
     };
   },
   watch: {
     resultsPerPage(newResultsPerPage) {
       driver.setResultsPerPage(newResultsPerPage);
+    },
+    sortBy(newSortBy) {
+      const sortBy = newSortBy === "relevance" ? "" : newSortBy;
+      driver.setSort(sortBy, "asc");
     }
   },
   mounted() {
