@@ -52,14 +52,7 @@
           <div class="sui-layout-main-header">
             <div class="sui-layout-main-header__inner">
               <SearchPagingInfo :search-state="searchState" />
-            </div>
-            <div class="sui-results-per-page">
-              <div class="sui-results-per-page__label">Show</div>
-              <select v-model="resultsPerPage" name="resultsPerPage">
-                <option :value="20">20</option>
-                <option :value="40">40</option>
-                <option :value="60">60</option>
-              </select>
+              <SearchResultsPerPage v-model.number="resultsPerPage" />
             </div>
           </div>
           <div class="sui-layout-main-body">
@@ -89,6 +82,7 @@ import SearchHeader from "./SearchHeader";
 import SearchPagingInfo from "./SearchPagingInfo";
 import SearchPagination from "./SearchPagination";
 import SearchSort from "./SearchSort";
+import SearchResultsPerPage from "./SearchResultsPerPage";
 
 const driver = new SearchDriver(config);
 
@@ -99,7 +93,8 @@ export default {
     SearchHeader,
     SearchPagingInfo,
     SearchPagination,
-    SearchSort
+    SearchSort,
+    SearchResultsPerPage
   },
   data() {
     return {
