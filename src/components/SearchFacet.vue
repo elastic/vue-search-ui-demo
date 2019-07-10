@@ -1,5 +1,5 @@
 <template>
-  <div class="sui-multi-checkbox-facet sui-facet">
+  <div v-show="facet.data.length" class="sui-multi-checkbox-facet sui-facet">
     <div class="sui-multi-checkbox-facet__label">
       {{ facet.field }}
     </div>

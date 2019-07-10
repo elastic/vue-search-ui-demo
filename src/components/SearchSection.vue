@@ -4,45 +4,39 @@
     <div v-if="searchState.wasSearched" class="sui-layout-body">
       <div class="sui-layout-body__inner">
         <div class="sui-layout-sidebar">
-          <SearchSort v-model="sortBy" />
+          <SearchSort v-show="thereAreResults" v-model="sortBy" />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.card_class"
             :checked="card_class"
             :facet="searchState.facets.card_class[0]"
             @change="handleFacetChange($event, 'card_class')"
           />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.artist"
             :checked="artist"
             :facet="searchState.facets.artist[0]"
             @change="handleFacetChange($event, 'artist')"
           />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.type"
             :checked="type"
             :facet="searchState.facets.type[0]"
             @change="handleFacetChange($event, 'type')"
           />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.set"
             :checked="set"
             :facet="searchState.facets.set[0]"
             @change="handleFacetChange($event, 'set')"
           />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.race"
             :checked="race"
             :facet="searchState.facets.race[0]"
             @change="handleFacetChange($event, 'race')"
           />
 
           <SearchFacet
-            v-if="searchState.facets && searchState.facets.rarity"
             :checked="rarity"
             :facet="searchState.facets.rarity[0]"
             @change="handleFacetChange($event, 'rarity')"
@@ -52,17 +46,21 @@
           <div class="sui-layout-main-header">
             <div class="sui-layout-main-header__inner">
               <SearchPagingInfo :search-state="searchState" />
-              <SearchResultsPerPage v-model.number="resultsPerPage" />
+              <SearchResultsPerPage
+                v-show="thereAreResults"
+                v-model.number="resultsPerPage"
+              />
             </div>
           </div>
           <div class="sui-layout-main-body">
             <SearchResults
-              v-if="searchState.results"
+              v-show="thereAreResults"
               :results="searchState.results"
             />
           </div>
           <div class="sui-layout-main-footer">
             <SearchPagination
+              v-show="thereAreResults"
               :total-pages="searchState.totalPages"
               :click-handler="setCurrentPage"
             />
@@ -109,6 +107,11 @@ export default {
       resultsPerPage: 20,
       sortBy: "relevance"
     };
+  },
+  computed: {
+    thereAreResults() {
+      return this.searchState.totalResults && this.searchState.totalResults > 0;
+    }
   },
   watch: {
     resultsPerPage(newResultsPerPage) {
