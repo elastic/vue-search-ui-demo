@@ -61,7 +61,7 @@
           <div class="sui-layout-main-footer">
             <SearchPagination
               v-show="thereAreResults"
-              :total-pages="searchState.totalPages"
+              :total-pages="Math.min(searchState.totalPages, 100)"
               :click-handler="setCurrentPage"
             />
           </div>
