@@ -6,7 +6,7 @@
       :value="value"
       @input="$emit('input', $event.target.value)"
     >
-      <option value="relevance">Relevance</option>
+      <option value="">Relevance</option>
       <option value="name">Name</option>
     </select>
   </div>

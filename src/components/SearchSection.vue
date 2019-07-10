@@ -98,12 +98,12 @@ export default {
     return {
       searchInputValue: "",
       searchState: {},
-      race: {},
-      rarity: {},
-      type: {},
-      set: {},
-      artist: {},
-      card_class: {},
+      race: [],
+      rarity: [],
+      type: [],
+      set: [],
+      artist: [],
+      card_class: [],
       resultsPerPage: 20,
       sortBy: "relevance"
     };
@@ -123,7 +123,13 @@ export default {
     }
   },
   mounted() {
+    // restoring UI from url query
     this.searchInputValue = driver.getState().searchTerm;
+    this.sortBy = driver.getState().sortField;
+    this.resultsPerPage = driver.getState().resultsPerPage;
+    driver.getState().filters.forEach(filter => {
+      this[filter.field] = filter.values;
+    });
 
     driver.subscribeToStateChanges(state => {
       this.searchState = state;
@@ -136,10 +142,14 @@ export default {
     handleFacetChange(event, facet) {
       const { value, checked } = event.target;
       if (checked) {
-        this[facet][value] = true;
+        this[facet].push(value);
         driver.addFilter(facet, value, "any");
       } else {
         this[facet][value] = false;
+        const index = this[facet].indexOf(value);
+        if (index > -1) {
+          this[facet].splice(index, 1);
+        }
         driver.removeFilter(facet, value, "any");
       }
     },

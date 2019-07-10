@@ -37,13 +37,13 @@ export default {
       required: true
     },
     checked: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
   methods: {
     isChecked(value) {
-      return this.checked && this.checked[value];
+      return this.checked && this.checked.includes(value);
     }
   }
 };
