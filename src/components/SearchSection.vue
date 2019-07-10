@@ -123,6 +123,8 @@ export default {
     }
   },
   mounted() {
+    this.searchInputValue = driver.getState().searchTerm;
+
     driver.subscribeToStateChanges(state => {
       this.searchState = state;
     });
