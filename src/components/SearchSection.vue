@@ -1,7 +1,7 @@
 <template>
   <div class="sui-layout">
     <SearchHeader v-model="searchInputValue" @submit="handleFormSubmit" />
-    <div class="sui-layout-body">
+    <div v-if="searchState.wasSearched" class="sui-layout-body">
       <div class="sui-layout-body__inner">
         <div class="sui-layout-sidebar">
           <SearchSort v-model="sortBy" />
