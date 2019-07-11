@@ -31,6 +31,7 @@ const config = {
       cost: {
         type: "range",
         ranges: [
+          { from: 0, to: 1, name: "0" },
           { from: 1, to: 2, name: "1" },
           { from: 2, to: 3, name: "2" },
           { from: 3, to: 4, name: "3" },
