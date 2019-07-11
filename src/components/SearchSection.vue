@@ -123,13 +123,20 @@ export default {
     }
   },
   mounted() {
+    const {
+      searchTerm,
+      sortField,
+      resultsPerPage,
+      filters,
+      facets
+    } = driver.getState();
+
     // restoring UI from url query
-    this.searchInputValue = driver.getState().searchTerm;
-    this.sortBy = driver.getState().sortField;
-    this.resultsPerPage = driver.getState().resultsPerPage;
-    driver.getState().filters.forEach(filter => {
-      // TODO should be: `if (type === 'range')` <-- this doesnt work, because type is "any"
-      if (filter.field === "cost") {
+    this.searchInputValue = searchTerm;
+    this.sortBy = sortField;
+    this.resultsPerPage = resultsPerPage;
+    filters.forEach(filter => {
+      if (facets[filter.field][0].type === "range") {
         this[filter.field] = filter.values.map(value => value.name);
       } else {
         this[filter.field] = filter.values;
