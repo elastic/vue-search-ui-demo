@@ -9,8 +9,8 @@ const connector = new AppSearchAPIConnector({
 const config = {
   debug: true,
   apiConnector: connector,
-  disjunctiveFacets: ["race"],
   searchQuery: {
+    disjunctiveFacets: ["cost", "card_class", "set", "type", "race", "rarity"],
     facets: {
       race: {
         type: "value"
