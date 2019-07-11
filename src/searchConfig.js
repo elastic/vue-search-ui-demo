@@ -22,13 +22,24 @@ const config = {
         type: "value"
       },
       set: {
-        type: "value"
-      },
-      artist: {
-        type: "value"
+        type: "value",
+        size: 30
       },
       card_class: {
         type: "value"
+      },
+      cost: {
+        type: "range",
+        ranges: [
+          { from: 1, to: 2, name: "1" },
+          { from: 2, to: 3, name: "2" },
+          { from: 3, to: 4, name: "3" },
+          { from: 4, to: 5, name: "4" },
+          { from: 5, to: 6, name: "5" },
+          { from: 6, to: 7, name: "6" },
+          { from: 7, to: 8, name: "7" },
+          { from: 8, name: "8+" }
+        ]
       }
     }
   }

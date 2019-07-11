@@ -7,15 +7,15 @@
           <SearchSort v-show="thereAreResults" v-model="sortBy" />
 
           <SearchFacet
-            :checked="card_class"
-            :facet="searchState.facets.card_class[0]"
-            @change="handleFacetChange($event, 'card_class')"
+            :checked="cost"
+            :facet="searchState.facets.cost[0]"
+            @change="handleFacetChange($event, 'cost')"
           />
 
           <SearchFacet
-            :checked="artist"
-            :facet="searchState.facets.artist[0]"
-            @change="handleFacetChange($event, 'artist')"
+            :checked="card_class"
+            :facet="searchState.facets.card_class[0]"
+            @change="handleFacetChange($event, 'card_class')"
           />
 
           <SearchFacet
@@ -102,8 +102,8 @@ export default {
       rarity: [],
       type: [],
       set: [],
-      artist: [],
       card_class: [],
+      cost: [],
       resultsPerPage: 20,
       sortBy: "relevance"
     };
@@ -128,7 +128,12 @@ export default {
     this.sortBy = driver.getState().sortField;
     this.resultsPerPage = driver.getState().resultsPerPage;
     driver.getState().filters.forEach(filter => {
-      this[filter.field] = filter.values;
+      // TODO should be: `if (type === 'range')` <-- this doesnt work, because type is "any"
+      if (filter.field === "cost") {
+        this[filter.field] = filter.values.map(value => value.name);
+      } else {
+        this[filter.field] = filter.values;
+      }
     });
 
     driver.subscribeToStateChanges(state => {
@@ -141,16 +146,21 @@ export default {
     },
     handleFacetChange(event, facet) {
       const { value, checked } = event.target;
+      const facetFromDriver = driver.getState().facets[facet][0];
+      const valueforApi =
+        facetFromDriver.type === "range"
+          ? facetFromDriver.data.find(item => item.value.name === value).value
+          : value;
+
       if (checked) {
         this[facet].push(value);
-        driver.addFilter(facet, value, "any");
+        driver.addFilter(facet, valueforApi, "any");
       } else {
-        this[facet][value] = false;
         const index = this[facet].indexOf(value);
         if (index > -1) {
           this[facet].splice(index, 1);
         }
-        driver.removeFilter(facet, value, "any");
+        driver.removeFilter(facet, valueforApi, "any");
       }
     },
     setCurrentPage(page) {
