@@ -17,7 +17,7 @@
               aria-autocomplete="list"
               aria-labelledby="downshift-0-label"
               autocomplete="off"
-              placeholder="Search your documents"
+              placeholder="Try searching for 'water', 'dragon' or 'ragnaros'"
               class="sui-search-box__text-input"
               :value="value"
               @input="$emit('input', $event.target.value)"
