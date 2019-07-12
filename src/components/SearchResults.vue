@@ -31,7 +31,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+
 .search-section__search-result {
-  width: 50%;
+  width: 48%;
+  margin: 1%;
+  background: white;
 }
 </style>
