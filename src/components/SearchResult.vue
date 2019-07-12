@@ -84,5 +84,6 @@ export default {
 .search-result__image {
   flex: none;
   width: 256px;
+  height: 387px;
 }
 </style>
