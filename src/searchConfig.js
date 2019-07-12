@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime";
 import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
 
 const connector = new AppSearchAPIConnector({
