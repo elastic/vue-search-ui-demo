@@ -118,8 +118,7 @@ export default {
       driver.setResultsPerPage(newResultsPerPage);
     },
     sortBy(newSortBy) {
-      const sortBy = newSortBy === "relevance" ? "" : newSortBy;
-      driver.setSort(sortBy, "asc");
+      driver.setSort(newSortBy, "asc");
     }
   },
   mounted() {

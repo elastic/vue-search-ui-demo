@@ -3,7 +3,7 @@
     Showing
     <strong>{{ start }} - {{ Math.min(end, searchState.totalResults) }}</strong>
     out of <strong>{{ searchState.totalResults }}</strong> for:
-    <em>{{ searchState.searchTerm }}</em>
+    <em>"{{ searchState.searchTerm }}"</em>
   </div>
 </template>
 

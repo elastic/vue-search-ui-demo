@@ -8,14 +8,11 @@
         :alt="result.name.raw"
       />
       <div class="search-result__data">
-        <div v-if="result.classes">
-          Classes: {{ JSON.stringify(result.classes.raw) }}
-        </div>
+        <div v-if="result.type">Type: {{ result.type.raw }}</div>
+        <div v-if="result.race">Race: {{ result.race.raw }}</div>
         <div v-else-if="result.card_class">
           Class: {{ result.card_class.raw }}
         </div>
-        <div v-if="result.type">Type: {{ result.type.raw }}</div>
-        <div v-if="result.race">Race: {{ result.race.raw }}</div>
         <div>Set: {{ result.set.raw }}</div>
         <div>Rarity: {{ result.rarity.raw }}</div>
         <br />
@@ -87,6 +84,5 @@ export default {
 .search-result__image {
   flex: none;
   width: 256px;
-  /* margin-left: -40px; */
 }
 </style>
