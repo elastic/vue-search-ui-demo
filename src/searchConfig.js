@@ -2,9 +2,10 @@ import "regenerator-runtime/runtime";
 import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
 
 const connector = new AppSearchAPIConnector({
-  searchKey: "search-cmx2y22ucp9ry64mneez4ddj",
+  searchKey: "search-7eud55t7ecdmqzcanjsc9cqu",
   engineName: "hearthstone-cards",
-  hostIdentifier: "host-98wz59"
+  endpointBase: "https://host-2376rb.api.swiftype.com",
+  cacheResponses: false
 });
 
 const config = {
